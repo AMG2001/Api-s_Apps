@@ -16,6 +16,7 @@ class WeatherApiCubit extends Cubit<WeatherApiState> {
   String cityName;
   var decodedCityData;
   Future<void> getCityData() async {
+    cityName = "cairo";
     /**
      * Show Loading Indicator in HomePage
      */
@@ -43,12 +44,12 @@ class WeatherApiCubit extends Cubit<WeatherApiState> {
           weatherTemp: decodedCityData["current"]["temp_c"],
           day: DateFormat.d().toString(),
           time: DateFormat.j().toString());
-          /**
+      /**
            * Send Success State to Home Page
            */
       print("Send Success State");
       emit(WeatherApiSuccessState());
-      print("WeatherApiSuccessState is sent #");
+      print("Weather Api Success State is sent #");
     } else {
       print("Send Failure State");
       emit(WeatherApiFaliureState());
