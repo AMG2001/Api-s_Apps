@@ -9,16 +9,32 @@ part 'home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit() : super(HomePageInitialState());
+  /**
+   * List will contain the whole news that will be showen in home page - ListView
+   */
   List<NewContainer> listOfNewsContainers = [];
 
   void getNews() async {
+    /**
+     * Send Loading State to HomePage
+     */
     emit(HomePageLoadingState());
+    /**
+     * Perform Http Request
+     */
     http.Response news = await http.get(Uri.parse(
         "https://gnews.io/api/v4/search?q=example&token=e4de66c4aae6486d2582fb1da12fca59"));
+        /**
+         * Decode the Response
+         */
     var decodedNews = jsonDecode(news.body);
-    print("Decoded News: $decodedNews");
+    /**
+     * Take only First 10 news and add them to list
+     */
     for (int i = 0; i < 10; i++) {
-      print("New Number $i added SuccessFully ##");
+    /**
+     * We have made modeled Container for each new  
+     */
       listOfNewsContainers.add(
         NewContainer(
           newsModel: NewsModel(
@@ -30,8 +46,9 @@ class HomePageCubit extends Cubit<HomePageState> {
         ),
       );
     }
-    print(
-        "List of News Containers: ${listOfNewsContainers[0].newsModel.title}");
+    /**
+     * After Adding News to List, Send Show News in HomePage
+     */
     emit(HomePageShowNewsState());
   }
 }

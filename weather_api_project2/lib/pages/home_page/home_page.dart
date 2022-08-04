@@ -8,24 +8,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /**
+     * BlocProvider obj to access all Cubit methods and Data.
+     */
     final blocProviderObj = BlocProvider.of<HomePageCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("News Page"),
       ),
-      body: BlocConsumer<HomePageCubit, HomePageState>(
-        listener: (context, state) {
-          if (state is HomePageLoadingState) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            );
-          }
-        },
+      body: BlocBuilder<HomePageCubit, HomePageState>(
         builder: (context, state) {
           if (state is HomePageInitialState) {
             return Container(
@@ -47,7 +38,19 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             );
-          } else if (state is HomePageShowNewsState) {
+          }
+          /**
+           * if the Coming State is Loading State .. 
+           */
+          else if (state is HomePageLoadingState) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          /**
+           * after load News .. show them
+           */
+          else if (state is HomePageShowNewsState) {
             Navigator.pop(context);
             return SafeArea(
                 child: ListView.builder(
@@ -56,7 +59,11 @@ class HomePage extends StatelessWidget {
                 return blocProviderObj.listOfNewsContainers[index];
               },
             ));
-          } else {
+          }
+          /**
+           * if there is any erorrs .. how error message
+           */
+          else {
             return Center(
               child: Text("Error"),
             );
