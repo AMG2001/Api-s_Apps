@@ -8,3 +8,5 @@ class HomePageInitialState extends HomePageState {}
 class HomePageLoadingState extends HomePageState {}
 
 class HomePageShowNewsState extends HomePageState {}
+
+class HomePageFaluireState extends HomePageState {}

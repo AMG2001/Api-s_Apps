@@ -51,7 +51,6 @@ class HomePage extends StatelessWidget {
            * after load News .. show them
            */
           else if (state is HomePageShowNewsState) {
-            Navigator.pop(context);
             return SafeArea(
                 child: ListView.builder(
               itemCount: blocProviderObj.listOfNewsContainers.length,
